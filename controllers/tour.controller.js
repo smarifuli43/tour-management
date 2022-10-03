@@ -25,7 +25,7 @@ exports.getTours = async (req, res) => {
       queries.fields = fields;
     }
 
-    if (req.query.page) {
+    if (req.query.page || req.query.limit) {
       const { page = 1, limit = 10 } = req.query;
       const skip = (page - 1) * parseInt(limit);
       queries.skip = skip;
@@ -69,7 +69,6 @@ exports.getTourById = async (req, res) => {
   try {
     const { id } = req.params;
     const tour = await getTourByIdService(id);
-
     res.status(200).json({
       status: 'success',
       data: tour,
@@ -88,7 +87,7 @@ exports.updateTour = async (req, res) => {
   try {
     const { id } = req.params;
     const tour = await updateTourService(id, req.body);
-
+    console.log(tour);
     res.status(200).json({
       status: 'success',
       data: 'Tour updated successfully',
