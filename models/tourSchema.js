@@ -43,6 +43,11 @@ const tourSchema = mongoose.Schema(
       required: [true, 'A tour must have a duration'],
       min: [0, 'duration cannot be negative'],
     },
+    viewCount: {
+      type: Number,
+      default: 0,
+      required: [true, 'A tour must have a viewCount'],
+    },
   },
   {
     timestamps: true,
