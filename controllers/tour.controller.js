@@ -2,6 +2,9 @@ const {
   getTourServices,
   createTourService,
   getTourByIdService,
+  updateTourService,
+  tourTrendingService,
+  tourCheapestService,
 } = require('../services/tour.services');
 
 // get tours
@@ -30,7 +33,6 @@ exports.getTours = async (req, res) => {
     }
 
     const tours = await getTourServices(filters, queries);
-    console.log(tours);
     res.status(200).json({
       status: 'success',
       data: tours,
@@ -71,6 +73,60 @@ exports.getTourById = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: tour,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Data is not valid',
+      error: error.message,
+    });
+  }
+};
+
+// update tour
+exports.updateTour = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const tour = await updateTourService(id, req.body);
+
+    res.status(200).json({
+      status: 'success',
+      data: 'Tour updated successfully',
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Data is not valid',
+      error: error.message,
+    });
+  }
+};
+
+// trending tours
+exports.tourTrending = async (req, res) => {
+  try {
+    const tours = await tourTrendingService();
+    res.status(200).json({
+      status: 'success',
+      data: tours,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Data is not valid',
+      error: error.message,
+    });
+  }
+};
+
+// cheapest tour
+exports.tourCheapest = async (req, res) => {
+  try {
+    const tours = await tourCheapestService();
+
+    res.status(200).json({
+      status: 'success',
+      data: tours,
     });
   } catch (error) {
     res.status(400).json({

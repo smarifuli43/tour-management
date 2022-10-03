@@ -21,3 +21,24 @@ exports.getTourByIdService = async (id) => {
 
   return tour;
 };
+
+exports.updateTourService = async (id, data) => {
+  const tour = await Tour.updateOne(
+    { _id: id },
+    { $set: data },
+    {
+      runValidators: true,
+    }
+  );
+  return tour;
+};
+
+exports.tourTrendingService = async () => {
+  const tour = await Tour.find({}).sort({ viewCount: -1 }).limit(3);
+  return tour;
+};
+
+exports.tourCheapestService = async () => {
+  const tours = await Tour.find({}).sort({ price: 1 }).limit(3);
+  return tours;
+};
